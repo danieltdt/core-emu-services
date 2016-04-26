@@ -7,7 +7,7 @@ class Service(CoreService):
     ''' This is a sample user-defined service.
     '''
     # a unique name is required, without spaces
-    _name = "DNS"
+    _name = "SandnetDNS"
     # you can create your own group here
     _group = "Sandnet"
     # list of other services this service depends on

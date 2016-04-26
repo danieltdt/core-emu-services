@@ -9,7 +9,7 @@ from core.service import CoreService, addservice
 from .. import SandnetService
 
 class Service(SandnetService):
-    _name = "HTTP"
+    _name = "SandnetHTTP"
     _configs = (
       '/etc/apache2/apache2.conf',
       '/var/www/index.html',
@@ -29,14 +29,16 @@ class Service(SandnetService):
 
     @classmethod
     def generateconfig(cls, node, filename, services):
+      here = lambda name: os.path.join(os.path.dirname(__file__), name)
+
       if filename == cls._configs[0]:
-        with open('apache2.conf') as f:
+        with open(here('apache2.conf')) as f:
           return f.read()
       elif filename == cls._configs[1]:
-        with open('index.html') as f:
+        with open(here('index.html')) as f:
           return f.read()
       elif filename == cls._configs[2]:
-        with open('envvars') as f:
+        with open(here('envvars')) as f:
           return f.read()
 
 # vim: syntax=python ts=2 sw=2 sts=4 et
