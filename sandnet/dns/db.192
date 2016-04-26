@@ -1,0 +1,17 @@
+;
+; BIND reverse data file for sandnet interfaces
+;
+$TTL	604800
+@	IN	SOA	dns.sandnet. root.sandnet. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+;@	IN	NS	dns.
+@	IN	NS	dns.sandnet.
+
+; other nodes
+11	IN	PTR	vizinho.sandnet.
+10	IN	PTR	dazzle.sandnet. ; cuckoo sandbox

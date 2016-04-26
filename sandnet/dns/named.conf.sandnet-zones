@@ -1,0 +1,19 @@
+zone "sandnet" {
+	type master;
+	file "/etc/bind/db.sandnet";
+};
+
+zone "209.80.192.in-addr.arpa" {
+	type master;
+	file "/etc/bind/db.192";
+};
+
+zone "231.17.198.in-addr.arpa" {
+	type master;
+	file "/etc/bind/db.198";
+};
+
+zone "70.0.200.in-addr.arpa" {
+	type master;
+	file "/etc/bind/db.200";
+};
