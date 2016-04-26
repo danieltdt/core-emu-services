@@ -1,1 +1,7 @@
+# Python generated files
 *.pyc
+*.pyo
+
+# Vim generated files
+*.swp
+*.swo
