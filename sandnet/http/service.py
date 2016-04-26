@@ -1,23 +1,15 @@
-#
-# CORE
-# Copyright (c)2010-2012 the Boeing Company.
-# See the LICENSE file included in this distribution.
-#
-''' Sample user-defined service.
-'''
-
 import os
 
 from core.service import CoreService, addservice
 from core.misc.ipaddr import IPv4Prefix, IPv6Prefix
 
-class MyService(CoreService):
-    ''' This is a sample user-defined service. 
+class Service(CoreService):
+    ''' This is a sample user-defined service.
     '''
     # a unique name is required, without spaces
-    _name = "MyService"
+    _name = "HTTP"
     # you can create your own group here
-    _group = "Utility"
+    _group = "Sandnet"
     # list of other services this service depends on
     _depends = ()
     # per-node directories
@@ -42,7 +34,7 @@ class MyService(CoreService):
 
         for ifc in node.netifs():
             cfg += 'echo "Node %s has interface %s"\n' % (node.name, ifc.name)
-            # here we do something interesting 
+            # here we do something interesting
             cfg += "\n".join(map(cls.subnetentry, ifc.addrlist))
             break
         return cfg
@@ -58,7 +50,4 @@ class MyService(CoreService):
         else:
             net = IPv4Prefix(x)
             return 'echo "  network %s"' % (net)
-
-# this line is required to add the above class to the list of available services
-addservice(MyService)
 
