@@ -11,7 +11,7 @@ node n1 {
     }
     canvas c1
     iconcoords {334.0 454.0}
-    labelcoords {363.0 461.0}
+    labelcoords {334.0 486.0}
     services {DefaultRoute SSH SandnetHTTP}
     interface-peer {eth0 n6}
 }
@@ -29,7 +29,7 @@ node n2 {
     }
     canvas c1
     iconcoords {376.0 79.0}
-    labelcoords {379.0 60.0}
+    labelcoords {376.0 111.0}
     interface-peer {eth0 n3}
 }
 
@@ -54,7 +54,7 @@ node n3 {
     }
     canvas c1
     iconcoords {373.0 255.0}
-    labelcoords {383.0 289.0}
+    labelcoords {373.0 287.0}
     interface-peer {eth0 n2}
     interface-peer {eth2 n6}
     interface-peer {eth1 n5}
@@ -73,7 +73,7 @@ node n4 {
     }
     canvas c1
     iconcoords {108.0 451.0}
-    labelcoords {75.0 460.0}
+    labelcoords {108.0 483.0}
     interface-peer {eth0 n6}
 }
 
@@ -89,8 +89,8 @@ node n5 {
 	!
     }
     canvas c1
-    iconcoords {625.0 295.0}
-    labelcoords {625.0 276.0}
+    iconcoords {617.0 340.0}
+    labelcoords {617.0 321.0}
     interface-peer {eth1 n3}
 }
 
@@ -153,7 +153,6 @@ option global {
     background_images no
     annotations yes
     grid yes
-    locked yes
     traffic_start 0
 }
 
