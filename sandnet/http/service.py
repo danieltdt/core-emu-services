@@ -23,9 +23,9 @@ class Service(SandnetService):
       '/run/lock/apache2',
       '/var/www',
     )
-    _startup = ('apache2ctl start',)
-    _shutdown = ('apache2ctl stop',)
-    _validate = ('pidof apache2',)
+    _startup = ('apachectl start',)
+    _shutdown = ('apachectl stop',)
+    _validate = ('pidof httpd',)
 
     @classmethod
     def generateconfig(cls, node, filename, services):
