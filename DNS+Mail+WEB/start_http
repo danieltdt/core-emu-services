@@ -1,8 +1,8 @@
 #! /bin/sh
 
-. ../common/start_functions.sh
+. ./start_functions.sh
 
-http_servers="www zpmMail"
+http_servers="svr-http"
 
 if test $# -eq 1; then
     eid=$1
@@ -53,4 +53,3 @@ do
         himage $h lighttpd -f /usr/local/etc/lighttpd/lighttpd.conf
     fi
 done
-

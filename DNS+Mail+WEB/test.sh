@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ../common/procedures.sh
+. ./procedures.sh
 
 dns_servers="aRootServer bRootServer cRootServer \
              dnsCom dnsOrg dnsHr hr2 \
@@ -18,7 +18,7 @@ if [ $? -ne 0 ]; then
     err=1
 else
     sleep 20
-    for h in $dns_servers $hosts; do 
+    for h in $dns_servers $hosts; do
 	dnsCheck $h@$eid zpmMail.zpm.fer.hr
 	if [ $? -eq 0 ]; then
 	    dnsCheck $h@$eid mm.tel.fer.hr
