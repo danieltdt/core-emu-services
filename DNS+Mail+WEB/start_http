@@ -21,7 +21,7 @@ if test $# -eq 1; then
     eid=$1
     isEidRunning $eid
 else
-    eid=`isNodeRunning www`
+    eid=`isNodeRunning svr-http`
     if [ $? -ne 0 ]; then
 	exit 1
     fi

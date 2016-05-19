@@ -2,11 +2,8 @@
 
 . ./procedures.sh
 
-dns_servers="aRootServer bRootServer cRootServer \
-             dnsCom dnsOrg dnsHr hr2 \
-             dnsFer \
-             dnsTel dnsZpm"
-hosts="mm www pc zpmMail"
+dns_servers="svr-dns"
+hosts="pc-vizinho svr-http svr-dns"
 err=0
 
 eid=`imunes -b NETWORK.imn | awk '/Experiment/{print $4; exit}'`
