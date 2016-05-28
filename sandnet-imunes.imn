@@ -76,6 +76,12 @@ node n2 {
 	 redistribute ospf6
 	 network ::/0
 	!
+	router ospf6
+	 router-id 0.0.0.2
+	 redistribute static
+	 redistribute connected
+	 redistribute ripng
+	!
     }
     canvas c0
     iconcoords {504 72}
@@ -126,9 +132,9 @@ node n5 {
 	 ip address 127.0.0.1/24
 	 ipv6 address ::1/128
 	!
-	ip route 0.0.0.0/0 10.0.1.1
-	!
 	ipv6 route ::/0 fc00:1::1
+	!
+	ip route 0.0.0.0/0 201.157.192.1
 	!
     }
     canvas c0
@@ -153,9 +159,9 @@ node n6 {
 	 ip address 127.0.0.1/24
 	 ipv6 address ::1/128
 	!
-	ip route 0.0.0.0/0 10.0.2.1
-	!
 	ipv6 route ::/0 fc00:2::1
+	!
+	ip route 0.0.0.0/0 191.242.96.1
 	!
     }
     canvas c0
@@ -180,9 +186,9 @@ node n7 {
 	 ip address 127.0.0.1/24
 	 ipv6 address ::1/128
 	!
-	ip route 0.0.0.0/0 10.0.0.1
-	!
 	ipv6 route ::/0 fc00::1
+	!
+	ip route 0.0.0.0/0 143.0.156.1
 	!
     }
     canvas c0
