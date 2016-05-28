@@ -35,6 +35,7 @@ for serv in $http_servers
 do
     echo "Starting http server on $serv..."
     h=${serv}@${eid}
+    docker_container=`himage -v $h`
     himage $h mkdir -p /usr/local/etc/lighttpd
     himage $h mkdir -p /var/log/lighttpd
     if isOSlinux; then
@@ -43,13 +44,13 @@ do
         himage $h chown -R www:www /var/log/lighttpd
     fi
 
-    hcp WEB_files/${serv}.lighttpd.conf $h:/usr/local/etc/lighttpd/lighttpd.conf
+    docker cp WEB_files/${serv}.lighttpd.conf $docker_container:/usr/local/etc/lighttpd/lighttpd.conf
     himage $h chmod 755 /usr/local/etc/lighttpd/lighttpd.conf
     if isOSlinux; then
-        hcp WEB_files/www.${serv} $h:/root
+        docker cp WEB_files/www.${serv} $docker_container:/root
         himage -b $h lighttpd -f /usr/local/etc/lighttpd/lighttpd.conf
     else
-        hcp -r WEB_files/www.${serv} $h:/root
+        docker cp -r WEB_files/www.${serv} $docker_container:/root
         himage $h lighttpd -f /usr/local/etc/lighttpd/lighttpd.conf
     fi
 done
