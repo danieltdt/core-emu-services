@@ -1,31 +1,17 @@
 node n0 {
-    type lanswitch
+    type ext
     network-config {
-	hostname switch1
-	!
-    }
-    canvas c0
-    iconcoords {408 72}
-    labelcoords {408 96}
-    interface-peer {e0 n5}
-    interface-peer {e1 n1}
-    interface-peer {e2 n6}
-}
-
-node n1 {
-    type pc
-    network-config {
-	hostname pc-vizinho
-	!
-	interface eth0
-	 ip address 10.0.0.20/24
-	 ipv6 address fc00::20/64
-	 mac address 42:00:aa:00:00:04
+	hostname sandbox
 	!
 	interface lo0
 	 type lo
 	 ip address 127.0.0.1/24
 	 ipv6 address ::1/128
+	!
+	interface ext0
+	 ipv6 address fc00::20/64
+	 mac address 42:00:aa:86:b5:00
+	 ip address 143.0.156.20/22
 	!
 	ip route 0.0.0.0/0 10.0.0.1
 	!
@@ -33,95 +19,45 @@ node n1 {
 	!
     }
     canvas c0
-    iconcoords {216 72}
-    labelcoords {216 103}
-    interface-peer {eth0 n0}
-    services {ssh tcpdump}
+    iconcoords {48 72}
+    labelcoords {48 109}
+    interface-peer {ext0 n1}
+}
+
+node n1 {
+    type lanswitch
+    network-config {
+	hostname sw-sandbox
+	!
+    }
+    canvas c0
+    iconcoords {264 72}
+    labelcoords {264 95}
+    interface-peer {e0 n0}
+    interface-peer {e1 n2}
+    interface-peer {e2 n7}
 }
 
 node n2 {
-    type host
-    network-config {
-	hostname svr-http
-	!
-	interface eth0
-	 ip address 10.0.1.10/24
-	 ipv6 address fc00:1::10/64
-	 mac address 42:00:aa:00:00:02
-	!
-	interface lo0
-	 type lo
-	 ip address 127.0.0.1/24
-	 ipv6 address ::1/128
-	!
-	ip route 0.0.0.0/0 10.0.1.1
-	!
-	ipv6 route ::/0 fc00:1::1
-	!
-    }
-    canvas c0
-    iconcoords {216 240}
-    labelcoords {216 276}
-    interface-peer {eth0 n4}
-    services {ssh tcpdump}
-}
-
-node n3 {
-    type host
-    network-config {
-	hostname svr-dns
-	!
-	interface eth0
-	 ip address 10.0.1.11/24
-	 ipv6 address fc00:1::11/64
-	 mac address 42:00:aa:00:00:03
-	!
-	interface lo0
-	 type lo
-	 ip address 127.0.0.1/24
-	 ipv6 address ::1/128
-	!
-	ip route 0.0.0.0/0 10.0.1.1
-	!
-	ipv6 route ::/0 fc00:1::1
-	!
-    }
-    canvas c0
-    iconcoords {216 336}
-    labelcoords {216 372}
-    interface-peer {eth0 n4}
-    services {ssh tcpdump}
-}
-
-node n4 {
-    type lanswitch
-    network-config {
-	hostname switch2
-	!
-    }
-    canvas c0
-    iconcoords {408 312}
-    labelcoords {408 335}
-    interface-peer {e0 n5}
-    interface-peer {e1 n2}
-    interface-peer {e2 n3}
-}
-
-node n5 {
     type router
     model quagga
     network-config {
 	hostname router1
 	!
-	interface eth1
-	 ip address 10.0.1.1/24
-	 ipv6 address fc00:1::1/64
-	 mac address 42:00:aa:00:00:01
-	!
 	interface eth0
-	 ip address 10.0.0.1/24
 	 ipv6 address fc00::1/64
-	 mac address 42:00:aa:00:00:00
+	 mac address 42:00:aa:86:b5:01
+	 ip address 143.0.156.1/22
+	!
+	interface eth2
+	 ipv6 address fc00:2::1/64
+	 mac address 42:00:aa:86:b5:03
+	 ip address 191.242.96.1/22
+	!
+	interface eth1
+	 ipv6 address fc00:1::1/64
+	 mac address 42:00:aa:86:b5:02
+	 ip address 201.157.192.1/18
 	!
 	interface lo0
 	 type lo
@@ -142,72 +78,170 @@ node n5 {
 	!
     }
     canvas c0
-    iconcoords {408 192}
-    labelcoords {408 217}
-    interface-peer {eth0 n0}
-    interface-peer {eth1 n4}
-    services {tcpdump}
+    iconcoords {504 72}
+    labelcoords {504 97}
+    interface-peer {eth0 n1}
+    interface-peer {eth1 n3}
+    interface-peer {eth2 n4}
 }
 
-node n6 {
-    type rj45
+node n3 {
+    type lanswitch
     network-config {
-	hostname enp2s0.42
-	!
-	vlan
-	 enabled 1
-	 tag 42
+	hostname sw-http
 	!
     }
     canvas c0
-    iconcoords {576 72}
-    labelcoords {576 101}
-    interface-peer {0 n0}
+    iconcoords {408 168}
+    labelcoords {408 191}
+    interface-peer {e0 n2}
+    interface-peer {e1 n5}
+}
+
+node n4 {
+    type lanswitch
+    network-config {
+	hostname sw-dns
+	!
+    }
+    canvas c0
+    iconcoords {600 168}
+    labelcoords {600 191}
+    interface-peer {e0 n2}
+    interface-peer {e1 n6}
+}
+
+node n5 {
+    type host
+    network-config {
+	hostname svr-http
+	!
+	interface eth0
+	 ipv6 address fc00:1::10/64
+	 mac address 42:00:aa:86:b5:04
+	 ip address 201.157.192.10/18
+	!
+	interface lo0
+	 type lo
+	 ip address 127.0.0.1/24
+	 ipv6 address ::1/128
+	!
+	ip route 0.0.0.0/0 10.0.1.1
+	!
+	ipv6 route ::/0 fc00:1::1
+	!
+    }
+    canvas c0
+    iconcoords {408 312}
+    labelcoords {408 348}
+    interface-peer {eth0 n3}
+    services {ssh}
+}
+
+node n6 {
+    type host
+    network-config {
+	hostname svr-dns
+	!
+	interface eth0
+	 ipv6 address fc00:2::10/64
+	 mac address 42:00:aa:86:b5:05
+	 ip address 191.242.96.10/22
+	!
+	interface lo0
+	 type lo
+	 ip address 127.0.0.1/24
+	 ipv6 address ::1/128
+	!
+	ip route 0.0.0.0/0 10.0.2.1
+	!
+	ipv6 route ::/0 fc00:2::1
+	!
+    }
+    canvas c0
+    iconcoords {600 312}
+    labelcoords {600 348}
+    interface-peer {eth0 n4}
+    services {ssh}
+}
+
+node n7 {
+    type pc
+    network-config {
+	hostname neighbor
+	!
+	interface eth0
+	 ipv6 address fc00::21/64
+	 mac address 42:00:aa:86:b5:06
+	 ip address 143.0.156.21/22
+	!
+	interface lo0
+	 type lo
+	 ip address 127.0.0.1/24
+	 ipv6 address ::1/128
+	!
+	ip route 0.0.0.0/0 10.0.0.1
+	!
+	ipv6 route ::/0 fc00::1
+	!
+    }
+    canvas c0
+    iconcoords {48 216}
+    labelcoords {48 247}
+    interface-peer {eth0 n1}
+    docker-attach true
+    services {ssh}
 }
 
 link l0 {
-    nodes {n5 n0}
-    bandwidth 0
-}
-
-link l1 {
-    nodes {n5 n4}
-    bandwidth 0
-}
-
-link l2 {
-    nodes {n4 n2}
-    bandwidth 0
-}
-
-link l3 {
-    nodes {n4 n3}
-    bandwidth 0
-}
-
-link l4 {
     nodes {n0 n1}
     bandwidth 0
 }
 
+link l1 {
+    nodes {n1 n2}
+    bandwidth 0
+}
+
+link l2 {
+    nodes {n2 n3}
+    bandwidth 0
+}
+
+link l3 {
+    nodes {n2 n4}
+    bandwidth 0
+}
+
+link l4 {
+    nodes {n3 n5}
+    bandwidth 0
+}
+
 link l5 {
-    nodes {n6 n0}
+    nodes {n4 n6}
+    bandwidth 0
+}
+
+link l6 {
+    nodes {n1 n7}
+    bandwidth 0
 }
 
 canvas c0 {
-    name {Canvas0}
+    name {Sadnet}
 }
 
 option show {
     interface_names yes
     ip_addresses yes
-    ipv6_addresses yes
+    ipv6_addresses no
     node_labels yes
     link_labels yes
     background_images no
     annotations yes
     hostsAutoAssign no
-    grid yes
+    grid no
     iconSize normal
     zoom 1.0
 }
