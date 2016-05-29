@@ -1,1 +1,1 @@
-systemctl restart docker.service ovs-vswitchd.service ovsdb-server.service
+systemctl restart mongodb.service docker.service ovs-vswitchd.service ovsdb-server.service
