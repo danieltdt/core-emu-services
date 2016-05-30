@@ -4,7 +4,7 @@
 
 dns_servers="svr-dns"
 
-hosts="neighbor"
+hosts="neighbor svr-http"
 
 if test $# -eq 1; then
     eid=$1
@@ -26,7 +26,10 @@ do
     himage ${i}@${eid} killall -9 named > /dev/null 2>&1
 
     himage $i@$eid mkdir -p /var/named/etc/namedb
-    docker cp $i/* $container:/var/named/etc/namedb
+    for f in $i/*
+    do
+      docker cp ${f} $container:/var/named/etc/namedb
+    done
 
     # Start named on all DNS servers
     echo Starting named on $i...
@@ -37,14 +40,15 @@ echo
 echo Copy/Create resolv.conf on clients:
 for i in $hosts
 do
-  container=`himage -v $i@$eid`
-  docker cp resolv.$i $container:/etc/resolv.conf
+  echo $i
+  himage $i@$eid echo "`cat resolv.$i`" > /etc/resolv.conf
 done
 
 echo
 echo Create empty resolv.conf on DNS servers:
 for i in $dns_servers
 do
-    himage $i@$eid cp /dev/null /etc/resolv.conf
+    echo $i
+    himage $i@$eid echo "" > /etc/resolv.conf
 done
 
