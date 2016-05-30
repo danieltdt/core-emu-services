@@ -1,19 +1,16 @@
 #! /bin/sh
 
-. ../common/start_functions.sh
+. ./start_functions.sh
 
-dns_servers="aRootServer bRootServer cRootServer \
-             dnsCom dnsOrg dnsHr hr2 \
-             dnsFer \
-             dnsTel dnsZpm"
+dns_servers="svr-dns"
 
-hosts="mm www pc zpmMail"
+hosts="neighbor"
 
 if test $# -eq 1; then
     eid=$1
     isEidRunning $eid
 else
-    eid=`isNodeRunning aRootServer`
+    eid=`isNodeRunning svr-dns`
     if [ $? -ne 0 ]; then
 	exit 1
     fi
@@ -23,10 +20,14 @@ cd DNS_files
 
 for i in $dns_servers
 do
+    container=`himage -v $i@$eid`
+
     # Stop named on all DNS servers
     himage ${i}@${eid} killall -9 named > /dev/null 2>&1
+
     himage $i@$eid mkdir -p /var/named/etc/namedb
-    hcp $i/* $i@$eid:/var/named/etc/namedb
+    docker cp $i/* $container:/var/named/etc/namedb
+
     # Start named on all DNS servers
     echo Starting named on $i...
     himage $i@$eid named -c /var/named/etc/namedb/named.conf
@@ -36,7 +37,8 @@ echo
 echo Copy/Create resolv.conf on clients:
 for i in $hosts
 do
-    hcp resolv.$i $i@$eid:/etc/resolv.conf 
+  container=`himage -v $i@$eid`
+  docker cp resolv.$i $container:/etc/resolv.conf
 done
 
 echo
@@ -45,4 +47,4 @@ for i in $dns_servers
 do
     himage $i@$eid cp /dev/null /etc/resolv.conf
 done
- 
+
