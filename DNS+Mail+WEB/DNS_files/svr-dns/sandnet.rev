@@ -1,0 +1,4 @@
+$TTL 86400
+@ IN SOA sandnet. root.sandnet ( 2 3h 1h 1w 1d ) ; Serial ; Refresh ; Retry ; Expire ; Minimum
+   IN NS sandnet.
+10 IN PTR sandnet.
