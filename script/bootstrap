@@ -10,6 +10,9 @@ source $sandnet_dir/script/common.sh
 
 cd $sandnet_dir
 
+say "installing ethtool"
+sudo pacman --needed --noconfirm -S ethtool
+
 say "check imunes"
 if ! pacman -Q imunes-git; then
   say "dowloading imunes"

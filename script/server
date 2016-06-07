@@ -19,7 +19,6 @@ systemctl restart docker.service ovs-vswitchd.service ovsdb-server.service
 say "running sandnet"
 sudo imunes -b -e sandnet $sandnet_dir/sandnet-imunes.imn | indent
 
-say "imunes experiment is running... press ctrl+c to stop"
 trap stop_experiment INT
 
 function stop_experiment() {
@@ -28,6 +27,16 @@ function stop_experiment() {
   sudo imunes -b -e sandnet
 }
 
-while true; do
-  sleep 1
-done
+say "disable tcp segmentation offload and checksums due linux bug"
+echo
+echo "see more at http://stackoverflow.com/questions/26716722/tcp-receives-packets-but-it-ignores-them" | indent
+echo "and https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19#.wlcj6kccb" | indent
+echo
+
+sudo ethtool -K sandnet-n0 tso off | indent
+sudo ethtool --offload sandnet-n0 rx off tx off | indent
+sudo ethtool -K sandnet-n0-ext0 tso off | indent
+sudo ethtool --offload sandnet-n0-ext0 rx off tx off | indent
+
+say "imunes experiment is running... press ctrl+c to stop"
+while true; do sleep 1; done
