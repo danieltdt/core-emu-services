@@ -10,7 +10,7 @@ source $sandnet_dir/script/common.sh
 
 cd $sandnet_dir
 
-say "installing ethtool"
+say "installing dependencies"
 sudo pacman --needed --noconfirm -S ethtool | indent
 
 say "check imunes"

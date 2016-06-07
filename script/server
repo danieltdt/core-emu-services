@@ -24,7 +24,6 @@ say "running sandnet"
 sudo imunes -b -e sandnet $sandnet_dir/sandnet-imunes.imn | indent
 
 trap stop_experiment INT
-
 function stop_experiment() {
   echo
   say "CTRL-C received. Stopping experiment..."
@@ -37,10 +36,20 @@ echo "see more at http://stackoverflow.com/questions/26716722/tcp-receives-packe
 echo "and https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19#.wlcj6kccb" | indent
 echo
 
-for ifname in sandnet-n{0,1,3,4}; do
+for ifname in sandnet-{n0-ext0,n1-e0,n1-e1,n1-e2,n3-e0,n3-e1,n4-e0,n4-e1}; do
   sudo ethtool -K $ifname tso off | indent
   sudo ethtool --offload $ifname rx off tx off | indent
 done
+
+say "starting sandnet services"
+cd $sandnet_dir/services
+sudo $sandnet_dir/services/start_http | indent
+sudo $sandnet_dir/services/start_dns | indent
+#sudo $sandnet_dir/services/start_mail
+echo
+echo "NOTE: your resolv service may not work. Try to reconnect" | indent
+echo
+cd $sandnet_dir
 
 say "imunes experiment is running... press ctrl+c to stop"
 while true; do sleep 1; done
