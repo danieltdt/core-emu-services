@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# bootstrap
+
+set -e          # fail fast
+set -o pipefail # fail through pipe
+# set -x
+
+sandnet_dir=$(cd $(dirname $0); cd ..; pwd)
+source $sandnet_dir/script/common.sh
+
+cd $sandnet_dir
+
+say "check imunes"
+if ! pacman -Q imunes-git; then
+  say "dowloading imunes"
+  mkdir -p $sandnet_dir/imunes
+  cd $sandnet_dir/imunes
+
+  curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/imunes-git.tar.gz
+  tar xvf imunes-git.tar.gz
+  cd ./imunes-git
+
+  say "installing imunes"
+  makepkg --noconfirm -sir | indent
+
+  cd $sandnet_dir
+  rm -rf $sandnet_dir/imunes
+fi
+

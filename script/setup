@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# setup
+
+set -e          # fail fast
+set -o pipefail # fail through pipe
+# set -x
+
+sandnet_dir=$(cd $(dirname $0); cd ..; pwd)
+source $sandnet_dir/script/common.sh
+
+cd $sandnet_dir
+
+say "bootstraping"
+$sandnet_dir/script/bootstrap
+
+say "initializing imunes container"
+sudo imunes -f -p

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# server
+
+set -e          # fail fast
+set -o pipefail # fail through pipe
+# set -x
+
+sandnet_dir=$(cd $(dirname $0); cd ..; pwd)
+source $sandnet_dir/script/common.sh
+
+cd $sandnet_dir
+
+say "updating"
+$sandnet_dir/script/update
+
+say "initializing services"
+systemctl restart docker.service ovs-vswitchd.service ovsdb-server.service
+
+say "running sandnet"
+sudo imunes -b -e sandnet $sandnet_dir/sandnet-imunes.imn | indent
+
+say "imunes experiment is running... press ctrl+c to stop"
+trap stop_experiment INT
+
+function stop_experiment() {
+  echo
+  say "CTRL-C received. Stopping experiment..."
+  sudo imunes -b -e sandnet
+}
+
+while true; do
+  sleep 1
+done
