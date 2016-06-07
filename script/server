@@ -13,8 +13,12 @@ cd $sandnet_dir
 say "updating"
 $sandnet_dir/script/update
 
-say "initializing services"
-systemctl restart docker.service ovs-vswitchd.service ovsdb-server.service
+say "running services"
+for service in docker.service ovs-vswitchd.service ovsdb-server.service; do
+  if ! systemctl status $service > /dev/null; then
+    systemctl restart $service
+  fi
+done
 
 say "running sandnet"
 sudo imunes -b -e sandnet $sandnet_dir/sandnet-imunes.imn | indent
